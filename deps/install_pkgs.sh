@@ -267,7 +267,7 @@ function main_debian() {
 function main_redhat() {
     
   yum install -y centos-release-scl
-  yum install -y devtoolset-3-toolchain
+  yum install -y devtoolset-9-toolchain
   yum install -y epel-release
   
   install_package wget
@@ -352,7 +352,7 @@ function main() {
   elif [[ $OS = "centos" ]]; then
     log "Detected CentOS ($OS_VERSION)"
     main_redhat $OS_VERSION
-    scl enable devtoolset-3 bash
+    scl enable devtoolset-9 bash
   elif [[ $OS = "redhat" ]]; then
     log "Detected Redhat ($OS_VERSION)"
     main_redhat $OS_VERSION
