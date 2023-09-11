@@ -45,7 +45,7 @@
 
 #if !defined(BP_WITH_OPENSSL)
  #include <relic/relic.h>
- #include <relic_ec/relic.h>
+//  #include <relic_ec/relic.h>
 #endif
 
 /*************************** BN Definitions *********************/
