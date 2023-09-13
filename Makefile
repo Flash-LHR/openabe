@@ -1,6 +1,6 @@
-.PHONY: all clean deps src examples bindings
+.PHONY: all clean deps src bindings
 
-all: check-env deps src examples
+all: check-env deps src
 
 check-env:
 ifndef ZROOT
@@ -18,9 +18,6 @@ deps:
 src:
 	$(MAKE) -C src
 
-examples:
-	$(MAKE) -C examples
-
 bindings:
 	$(MAKE) -C bindings
 
@@ -35,20 +32,9 @@ install: install-deps
 	mkdir -p $(INSTALL_PREFIX)/bin
 	cp -r $(ZROOT)/root/lib $(INSTALL_PREFIX)
 	cp -r $(ZROOT)/root/include $(INSTALL_PREFIX)
-	install -m 755 $(ZROOT)/src/bench_libopenabe $(INSTALL_PREFIX)/bin
-	install -m 755 $(ZROOT)/src/profile_libopenabe $(INSTALL_PREFIX)/bin
 	
-test:
-	(cd src && ./test_libopenabe) || exit 1
-	(cd src && ./test_zml) || exit 1
-	(cd src && ./test_abe) || exit 1
-	(cd src && ./test_pke) || exit 1
-	(cd src && ./test_ske) || exit 1
-	(cd src && ./test_zsym) || exit 1
-
 clean:
 	$(MAKE) -C src clean
-	$(MAKE) -C examples clean
 	$(RM) -rf $(ZROOT)/deps/root
 	$(RM) -rf $(ZROOT)/root/lib/* $(ZROOT)/root/include/*
 

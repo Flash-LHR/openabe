@@ -3,7 +3,7 @@
 CC ?= g++
 CXX ?= g++
 
-LDLIBS ?= -lgtest -lpthread
+LDLIBS ?= -lpthread
 
 DEPS_INSTALL_ZROOT = $(ZROOT)/deps/root
 OABE_LIB_ROOT = $(ZROOT)/root/lib
@@ -42,7 +42,7 @@ else
 endif
 
 # Set shared lib extension for each OS
-DEPS_PACKAGES = $(if $(USE_DEPS),$(USE_DEPS),relic openssl gtest)
+DEPS_PACKAGES = $(if $(USE_DEPS),$(USE_DEPS),relic openssl)
 ADD_CFLAGS :=
 OS_CXXFLAGS :=
 WITH_BP := 
@@ -56,9 +56,8 @@ ifeq ($(OS), Windows_NT)
     COMPILER_VARS := -G "MinGW Makefiles" -DSEED=WCGR
     CMAKE_VARS := -DCMAKE_MAKE_PROGRAM=/mingw64/bin/mingw32-make -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc.exe -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++.exe CMAKE_INCLUDE_PATH="/usr/local/include" CMAKE_LIBRARY_PATH="/usr/local/lib"
     SHLIB := dll
-    GTESTEXT := $(SHLIB)
     # No need to set -fPIC for windows as all code is position independent by default.
-    CXXFLAGS += -DGTEST_USE_OWN_TR1_TUPLE=0 -I/usr/local/include/ -I/usr/include
+    CXXFLAGS += -I/usr/local/include/ -I/usr/include
     SHFLAGS := -nostartfiles
     OPENSSL_CONFIG := Configure mingw64 shared
     # needed for static libs
@@ -72,7 +71,6 @@ else
        RELIC_OS = LINUX
        SHFLAGS = -shared
        SHLIB = so
-       GTESTEXT = $(SHLIB).0
        ifneq (,$(filter $(OS_FAMILY), fedora redhat))
            OS_CXXFLAGS +=  -I/usr/include
            ifeq ($(OS_FAMILY), redhat)
@@ -81,7 +79,7 @@ else
                 OS_CXXFLAGS += -DOS_FEDORA_LINUX
            endif
        endif
-       CXXFLAGS += -fPIC -DGTEST_USE_OWN_TR1_TUPLE=0 $(OS_CXXFLAGS)
+       CXXFLAGS += -fPIC $(OS_CXXFLAGS)
        CCFLAGS += -fPIC
        OPENSSL_CONFIG = config shared
        ADD_CFLAGS += -Wno-implicit-function-declaration
@@ -90,12 +88,11 @@ else
        RELIC_OS = MACOSX
        SHFLAGS = -dynamiclib -current_version 1.0 -compatibility_version 1.0
        SHLIB = dylib
-       GTESTEXT = 0.$(SHLIB)
        # pull in headers installed via brew (for gmp/relic/openssl)
        CCFLAGS += -fPIC
        CXXFLAGS += -I$(LOCAL_INCLUDE) $(OS_CXXFLAGS)
        # include the clang C++ standard library (as a result, enable TR1_TUPLE flag)
-       CXXFLAGS += -stdlib=libc++ -DGTEST_USE_OWN_TR1_TUPLE=1 -Wno-deprecated
+       CXXFLAGS += -stdlib=libc++ -Wno-deprecated
        # (Option to use GMP with OpenSSL?): -DOPENSSL_USE_GMP -lgmp
        OPENSSL_CONFIG := Configure darwin64-x86_64-cc shared
        ADD_CFLAGS += -Wno-implicit-function-declaration -Wno-macro-redefined

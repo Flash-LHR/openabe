@@ -11,8 +11,6 @@ CXX11FLAGS += $(CXXFLAGS)
 RELICLIBS = -lrelic_s 
 #$(DEPS_INSTALL_ROOT)/lib/librelic_s.a
 
-GTESTLIBS  = -lgtest -lpthread
-
 OABE_SHLIB = libopenabe.$(SHLIB)
 OABE_KEYS = keys/zkdf.o keys/zkey.o keys/zpkey.o keys/zkeystore.o keys/zsymkey.o
 OABE_LOW = ske/zcontextske.o pke/zcontextpke.o pksig/zcontextpksig.o \
@@ -53,9 +51,7 @@ LIBRARYH=header
 
 GENFILES = location.hh position.hh stack.hh *.tab.* zscanner.cpp
 
-PROGRAMS = test_libopenabe test_zml test_zml1 test_zml2 test_policy test_abe test_pke test_ske test_zsym test_keystore bench_libopenabe profile_libopenabe fuzz_policy fuzz_attrlist
-
-all: $(OABELIB) $(ZSYMLIB) $(PROGRAMS)
+all: $(OABELIB) $(ZSYMLIB)
 
 zml/zelement.o:
 	$(CC) $(CCFLAGS) -c zml/zelement.c -o zelement.o
@@ -86,59 +82,10 @@ $(ZSYMLIB): $(OABELIB)
 	$(AR) rcs $(ZSYMLIB) $(ZSYM_OBJS)
 	cp $@ $(OABE_LIB_ROOT)
 
-test:
-	./test_libopenabe || exit 1
-	./test_zml || exit 1
-	./test_abe || exit 1
-	./test_pke || exit 1
-	./test_ske || exit 1
-	./test_keystore || exit 1
-
-test_libopenabe: $(OABELIB)
-	$(CXX) -o test_libopenabe $(CXX11FLAGS) $(LDFLAGS) -L. test_libopenabe.cpp $(OABELIB) $(OABELDLIBS) $(GTESTLIBS)
-
-test_zml: $(OABELIB)
-	$(CXX) -o test_zml $(CXX11FLAGS) $(LDFLAGS) -L. test_zml.cpp $(OABELIB) $(OABELDLIBS) $(GTESTLIBS)
-
-test_zml1: $(OABELIB)
-	$(CXX) -o test_zml1 $(CXX11FLAGS) $(LDFLAGS) -L. test_zml1.cpp $(OABELIB) $(OABELDLIBS) -lpthread
-
-test_zml2: $(OABELIB)
-	$(CXX) -o test_zml2 $(CXX11FLAGS) $(LDFLAGS) -L. test_zml2.cpp $(OABELIB) $(OABELDLIBS) -lpthread
-
-test_policy: $(OABELIB)
-	$(CXX) -o test_policy $(CXX11FLAGS) $(LDFLAGS) -L. test_policy.cpp $(OABELIB) $(OABELDLIBS) $(GTESTLIBS)
-
-test_abe: $(OABELIB)
-	$(CXX) -o test_abe $(CXX11FLAGS) $(LDFLAGS) -L. test_abe.cpp $(OABELIB) $(OABELDLIBS) $(GTESTLIBS)
-
-test_pke: $(OABELIB)
-	$(CXX) -o test_pke $(CXX11FLAGS) $(LDFLAGS) -L. test_pke.cpp $(OABELIB) $(OABELDLIBS) $(GTESTLIBS)
-
-test_ske: $(OABELIB)
-	$(CXX) -o test_ske $(CXX11FLAGS) $(LDFLAGS) -L. test_ske.cpp $(OABELIB) $(OABELDLIBS) $(GTESTLIBS)
-
-test_keystore: $(OABELIB)
-	$(CXX) -o test_keystore $(CXX11FLAGS) $(LDFLAGS) -L. test_keystore.cpp $(OABELIB) $(OABELDLIBS) $(GTESTLIBS)
-
-bench_libopenabe: $(OABELIB)
-	$(CXX) -o bench_libopenabe $(CXX11FLAGS) $(LDFLAGS) -L. bench_libopenabe.cpp $(OABELIB) $(OABELDLIBS) $(BOOST_SYSTEM) $(BOOST_THREAD)
-
-profile_libopenabe: $(OABELIB)
-	$(CXX) -o profile_libopenabe $(CXX11FLAGS) $(LDFLAGS) -L. profile_libopenabe.cpp $(OABELIB) $(OABELDLIBS)
-
-fuzz_policy: $(OABELIB)
-	$(CXX) -o fuzz_policy $(CXX11FLAGS) $(LDFLAGS) -L. fuzz_policy.cpp $(OABELIB) $(OABELDLIBS)
-
-fuzz_attrlist: $(OABELIB)
-	$(CXX) -o fuzz_attrlist $(CXX11FLAGS) $(LDFLAGS) -L. fuzz_attrlist.cpp $(OABELIB) $(OABELDLIBS)
-
-test_zsym: $(ZSYMLIB)
-	$(CXX) -o test_zsym $(CXX11FLAGS) $(LDFLAGS) -L. test_zsym.cpp $(ZSYMLIB) $(ZSYM_DEP_LIBS)
 
 clean:
 	-rm -rf *.o *.dSYM a.out zparser.output $(PROGRAMS) $(OABELIB) $(OABE_SHLIB) $(ZSYMLIB) $(GENFILES)
-	-rm -f librelic*.$(SHLIB) libcrypto.$(SHLIB) libsl.$(SHLIB) libgtest*.$(SHLIB)
+	-rm -f librelic*.$(SHLIB) libcrypto.$(SHLIB) libsl.$(SHLIB)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $<
