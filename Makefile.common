@@ -120,7 +120,7 @@ CXXFLAGS += -g -O2
 # CC="afl-clang" # for mac
 # CXX="afl-clang++"
 
-LDFLAGS += -L$(DEPS_INSTALL_ZROOT)/lib -L$(OABE_LIB_ROOT) -L$(LOCAL_LIB_ROOT) -I/home/omm/tmp/openabe/deps/root/lib
+LDFLAGS += -L$(DEPS_INSTALL_ZROOT)/lib -L$(OABE_LIB_ROOT) -L$(LOCAL_LIB_ROOT) -L/home/omm/tmp/openabe/deps/root/lib
 
 # Zeutro Math library config: RELIC vs OPENSSL
 # Look for environment variable ZML_LIB=with_openssl
