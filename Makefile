@@ -1,6 +1,6 @@
-.PHONY: all clean deps src bindings
+.PHONY: all clean src
 
-all: check-env deps src
+all: check-env src
 
 check-env:
 ifndef ZROOT
@@ -12,21 +12,8 @@ INSTALL_PREFIX ?= /usr/local
 docs:
 	$(MAKE) -C docs
 
-deps:
-	$(MAKE) -C deps
-
 src:
 	$(MAKE) -C src
-
-bindings:
-	$(MAKE) -C bindings
-
-install-deps:
-	mkdir -p $(ZROOT)/deps/root/bin
-	mkdir -p $(INSTALL_PREFIX)
-	cp -r $(ZROOT)/deps/root/lib $(INSTALL_PREFIX)
-	cp -r $(ZROOT)/deps/root/include $(INSTALL_PREFIX)
-	cp -rn $(ZROOT)/deps/root/bin $(INSTALL_PREFIX)
 
 install: install-deps
 	mkdir -p $(INSTALL_PREFIX)/bin
