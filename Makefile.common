@@ -19,8 +19,8 @@ CXXFLAGS := -I$(DEPS_INSTALL_ZROOT)/include
 #  Local includes (for generated headers from bison/flex)
 CXXFLAGS += -I$(ZROOT)/src
 #  Common includes (C/C++)
-CCFLAGS += -I$(INCLUDE_ROOT) -I$(LOCAL_INCLUDE)
-CXXFLAGS += -I$(INCLUDE_ROOT) -I$(LOCAL_INCLUDE)
+CCFLAGS += -I$(INCLUDE_ROOT) -I$(LOCAL_INCLUDE) -I/home/omm/tmp/openabe/deps/root/include
+CXXFLAGS += -I$(INCLUDE_ROOT) -I$(LOCAL_INCLUDE) -I/home/omm/tmp/openabe/deps/root/include
 
 RELIC_LIB = -lrelic -lrelic_ec
 RELIC_LIB_STATIC = -lrelic_s -lrelic_s_ec
@@ -123,7 +123,7 @@ CXXFLAGS += -g -O2
 # CC="afl-clang" # for mac
 # CXX="afl-clang++"
 
-LDFLAGS += -L$(DEPS_INSTALL_ZROOT)/lib -L$(OABE_LIB_ROOT) -L$(LOCAL_LIB_ROOT)
+LDFLAGS += -L$(DEPS_INSTALL_ZROOT)/lib -L$(OABE_LIB_ROOT) -L$(LOCAL_LIB_ROOT) -I/home/omm/tmp/openabe/deps/root/lib
 
 # Zeutro Math library config: RELIC vs OPENSSL
 # Look for environment variable ZML_LIB=with_openssl
