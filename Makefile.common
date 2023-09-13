@@ -42,7 +42,7 @@ else
 endif
 
 # Set shared lib extension for each OS
-DEPS_PACKAGES = $(if $(USE_DEPS),$(USE_DEPS),relic openssl)
+DEPS_PACKAGES = $(if $(USE_DEPS),$(USE_DEPS), openssl)
 ADD_CFLAGS :=
 OS_CXXFLAGS :=
 WITH_BP := 
