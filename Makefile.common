@@ -18,10 +18,10 @@ GMP_INCLUDE = $(TOP_DIR)/output/kernel/dependency/gmp/comm/include/
 RELIC_INCLUDE = $(TOP_DIR)/output/kernel/dependency/relic/comm/include/
 RELIC_EC_INCLUDE = $(TOP_DIR)/output/kernel/dependency/relic_ec/comm/include/
 
-OPENSSL_LIB = $(TOP_DIR)/output/kernel/dependency/openssl/comm/lib/
-GMP_LIB = $(TOP_DIR)/output/kernel/dependency/gmp/comm/lib/
-RELIC_LIB = $(TOP_DIR)/output/kernel/dependency/relic/comm/lib/
-RELIC_EC_LIB = $(TOP_DIR)/output/kernel/dependency/relic_ec/comm/lib/
+OPENSSL_LIB_PATH = $(TOP_DIR)/output/kernel/dependency/openssl/comm/lib/
+GMP_LIB_PATH = $(TOP_DIR)/output/kernel/dependency/gmp/comm/lib/
+RELIC_LIB_PATH = $(TOP_DIR)/output/kernel/dependency/relic/comm/lib/
+RELIC_EC_LIB_PATH = $(TOP_DIR)/output/kernel/dependency/relic_ec/comm/lib/
 
 # Include locations
 #  Dependencies (C/C++)
@@ -130,7 +130,7 @@ CXXFLAGS += -g -O2
 # CXX="afl-clang++"
 
 LDFLAGS += -L$(OABE_LIB_ROOT) -L$(LOCAL_LIB_ROOT)
-LDFLAGS += -L$(OPENSSL_LIB) -L$(GMP_LIB) -L$(RELIC_LIB) -L$(RELIC_EC_LIB)
+LDFLAGS += -L$(OPENSSL_LIB_PATH) -L$(GMP_LIB_PATH) -L$(RELIC_LIB_PATH) -L$(RELIC_EC_LIB_PATH)
 
 # Zeutro Math library config: RELIC vs OPENSSL
 # Look for environment variable ZML_LIB=with_openssl
