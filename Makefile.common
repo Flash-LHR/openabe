@@ -5,22 +5,20 @@ CXX ?= g++
 
 LDLIBS ?= -lpthread
 
-DEPS_INSTALL_ZROOT = $(ZROOT)/deps/root
-OABE_LIB_ROOT = $(ZROOT)/root/lib
-INCLUDE_ROOT = $(ZROOT)/root/include
+OABE_LIB_ROOT = $(ZROOT)/lib
+INCLUDE_ROOT = $(ZROOT)/include
 LOCAL_LIB_ROOT ?= /usr/local/lib
 LOCAL_INCLUDE ?= /usr/local/include
 LOCAL_INSTALL_BIN ?= /usr/local/bin
 
 # Include locations
 #  Dependencies (C/C++)
-CCFLAGS = -I$(DEPS_INSTALL_ZROOT)/include
-CXXFLAGS := -I$(DEPS_INSTALL_ZROOT)/include
+CCFLAGS := 
+CXXFLAGS := 
 #  Local includes (for generated headers from bison/flex)
-CXXFLAGS += -I$(ZROOT)/src
 #  Common includes (C/C++)
-CCFLAGS += -I$(INCLUDE_ROOT) -I$(LOCAL_INCLUDE) -I/home/omm/tmp/openabe/deps/root/include
-CXXFLAGS += -I$(INCLUDE_ROOT) -I$(LOCAL_INCLUDE) -I/home/omm/tmp/openabe/deps/root/include
+CCFLAGS += -I$(INCLUDE_ROOT) -I$(LOCAL_INCLUDE)
+CXXFLAGS += -I$(INCLUDE_ROOT) -I$(LOCAL_INCLUDE)
 
 RELIC_LIB = -lrelic -lrelic_ec
 RELIC_LIB_STATIC = -lrelic_s -lrelic_s_ec
@@ -119,7 +117,7 @@ CXXFLAGS += -g -O2
 # CC="afl-clang" # for mac
 # CXX="afl-clang++"
 
-LDFLAGS += -L$(DEPS_INSTALL_ZROOT)/lib -L$(OABE_LIB_ROOT) -L$(LOCAL_LIB_ROOT) -L/home/omm/tmp/openabe/deps/root/lib
+LDFLAGS += -L$(OABE_LIB_ROOT) -L$(LOCAL_LIB_ROOT)
 
 # Zeutro Math library config: RELIC vs OPENSSL
 # Look for environment variable ZML_LIB=with_openssl

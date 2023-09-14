@@ -15,7 +15,6 @@ if [ $# -eq 2 ]; then
 fi
 
 ZROOT=$(pwd)
-DEPS_INSTALL_ZROOT=${ZROOT}/deps/root
 OABE_LIBS_ROOT=${ZROOT}/root
 
 # get the platform
@@ -41,8 +40,6 @@ function get_os_family() {
 }
 
 export ZROOT
-export DEPS_INSTALL_ZROOT
-export LD_LIBRARY_PATH=${DEPS_INSTALL_ZROOT}/lib:${OABE_LIBS_ROOT}/lib:${LD_LIBRARY_PATH}
 
 OS_NAME=`uname -s`
 if [[ $OS_NAME == "Linux" ]]; then
