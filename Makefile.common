@@ -11,10 +11,22 @@ LOCAL_LIB_ROOT ?= /usr/local/lib
 LOCAL_INCLUDE ?= /usr/local/include
 LOCAL_INSTALL_BIN ?= /usr/local/bin
 
+TOP_DIR = ../../../../
+
+OPENSSL_INCLUDE = $(TOP_DIR)/output/kernel/dependency/openssl/comm/include/
+GMP_INCLUDE = $(TOP_DIR)/output/kernel/dependency/gmp/comm/include/
+RELIC_INCLUDE = $(TOP_DIR)/output/kernel/dependency/relic/comm/include/
+RELIC_EC_INCLUDE = $(TOP_DIR)/output/kernel/dependency/relic_ec/comm/include/
+
+OPENSSL_LIB = $(TOP_DIR)/output/kernel/dependency/openssl/comm/lib/
+GMP_LIB = $(TOP_DIR)/output/kernel/dependency/gmp/comm/lib/
+RELIC_LIB = $(TOP_DIR)/output/kernel/dependency/relic/comm/lib/
+RELIC_EC_LIB = $(TOP_DIR)/output/kernel/dependency/relic_ec/comm/lib/
+
 # Include locations
 #  Dependencies (C/C++)
-CCFLAGS := 
-CXXFLAGS := 
+CCFLAGS := -I$(OPENSSL_INCLUDE) -I$(GMP_INCLUDE) -I$(RELIC_INCLUDE) -I$(RELIC_EC_INCLUDE)
+CXXFLAGS := -I$(OPENSSL_INCLUDE) -I$(GMP_INCLUDE) -I$(RELIC_INCLUDE) -I$(RELIC_EC_INCLUDE)
 #  Local includes (for generated headers from bison/flex)
 #  Common includes (C/C++)
 CCFLAGS += -I$(INCLUDE_ROOT) -I$(LOCAL_INCLUDE)
@@ -118,6 +130,7 @@ CXXFLAGS += -g -O2
 # CXX="afl-clang++"
 
 LDFLAGS += -L$(OABE_LIB_ROOT) -L$(LOCAL_LIB_ROOT)
+LDFLAGS += -L$(OPENSSL_LIB) -L$(GMP_LIB) -L$(RELIC_LIB) -L$(RELIC_EC_LIB)
 
 # Zeutro Math library config: RELIC vs OPENSSL
 # Look for environment variable ZML_LIB=with_openssl
